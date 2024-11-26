@@ -1,0 +1,134 @@
+/* ********************************** */
+/*     PRODUCTS  Personalizados       */
+/* ********************************** */
+/* Products */
+.container-personalizable {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+	gap: 7rem;
+}
+
+.card-personalizable {
+	background-color: #fff;
+	padding: 2rem 3rem;
+	border-radius: 2.5rem;
+	cursor: pointer;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.container-img-personalizable {
+	position: relative;
+}
+
+.container-img-personalizable img {
+	width: 100%;
+}
+
+.button-group-personalizable {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	position: absolute;
+	top: 1rem;
+	right: -3rem;
+	z-index: -1;
+	transition: all 0.4s ease;
+}
+
+.button-group-personalizable span {
+	border: 1px solid var(--primary-color);
+	padding: 0.8rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	transition: all 0.4s ease;
+}
+
+.button-group-personalizable span:hover {
+	background-color: var(--primary-color);
+}
+
+.button-group-personalizable span i {
+	font-size: 1.5rem;
+	color: var(--primary-color);
+}
+
+.button-group-personalizable span:hover i {
+	color: #fff;
+}
+
+.card-personalizable:hover .button-group-personalizable {
+	z-index: 0;
+	right: -1rem;
+}
+
+.content-card-personalizable {
+	display: grid;
+	justify-items: center;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: repeat(4, min-content);
+	row-gap: 1rem;
+}
+
+.content-card-personalizable h3 {
+	grid-row: 2/3;
+	grid-column: 1/-1;
+
+	font-weight: 400;
+	font-size: 1.6rem;
+	margin-bottom: 1rem;
+}
+
+.content-card-personalizable h3:hover {
+	color: var(--primary-color);
+}
+
+.add-cart-personalizable {
+	justify-self: start;
+	border: 2px solid var(--primary-color);
+	padding: 1rem;
+	border-radius: 50%;
+	cursor: pointer;
+	transition: all 0.4s ease;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: auto;
+}
+
+.add-cart-personalizable:hover {
+	background-color: var(--primary-color);
+}
+
+.add-cart-personalizable i {
+	font-size: 1.5rem;
+	color: var(--primary-color);
+}
+
+.add-cart-personalizable:hover i {
+	color: #fff;
+}
+
+.content-card-personalizable .price-personalizable {
+	justify-self: end;
+	align-self: center;
+
+	font-size: 1.7rem;
+	font-weight: 600;
+}
+p {
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    margin-right: auto;
+}
+
+.content-card-product-personalizable .price-personalizable span {
+	font-size: 1.5rem;
+	font-weight: 400;
+	text-decoration: line-through;
+	color: #777;
+	margin-left: 0.5rem;
+}
