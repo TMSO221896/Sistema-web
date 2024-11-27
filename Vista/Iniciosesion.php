@@ -55,8 +55,6 @@ if (isset($_SESSION['usuario'])) {
                 <input type="text" placeholder="Nombre Usuario" name="usuario" value="<?php echo isset($log) ? $log : ''; ?>" required>
                 <!-- Campo para ingresar la contraseña -->
                 <input type="password" placeholder="Contraseña" name="contraseña" required>
-                <!-- Enlace para recuperar la contraseña -->
-                <a href="#">¿Olvidaste tu contraseña?</a>
                 <button type="submit">Iniciar sesión</button>
             </form>
         </div>

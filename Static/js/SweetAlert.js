@@ -78,8 +78,9 @@ function validarProducto(event) {
     let nombreproducto = document.querySelector("input[name='nombreproducto']").value.trim();
     let descripcion = document.querySelector("textarea[name='descripcion']").value.trim();
     let precio = document.querySelector("input[name='precio']").value.trim();
+    let categoria = document.querySelector("select[name='categoria']").value.trim();
 
-    if (!idproducto || !nombreproducto || !descripcion || !precio) {
+    if (!idproducto || !nombreproducto || !descripcion || !precio || !categoria) {
         mostrarAlerta("Todos los campos son obligatorios", "error");
         return false;
     }else{

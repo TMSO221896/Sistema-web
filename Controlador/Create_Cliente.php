@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $queryUsuario = "INSERT INTO usuarios (usuario, nombre, apellido, correo, contrasena, rol) VALUES ('$usuario', '$nombre', '$apellido', '$correo', '$contraseña', 3)";
         if (mysqli_query($conexion, $queryUsuario)) {
             $usuario_id = mysqli_insert_id($conexion); // Obtener el ID del usuario insertado
-            $queryBitacora = "INSERT INTO bitacora_usuarios (usuario_id, accion, fecha) VALUES ('$usuario_id', 'Creado', CURDATE())";
+            $queryBitacora = "INSERT INTO bitacora_usuarios (usuario_id, accion, fecha) VALUES ('$usuario', 'Creado', CURDATE())";
             mysqli_query($conexion, $queryBitacora); // Ejecutar la inserción en bitácora
 
             $_SESSION['alert'] = 'success';

@@ -152,8 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
                 $query = "INSERT INTO recetas (id, nombre, receta, usuario_id) 
                           VALUES ('$ID', '$nombreRec', '$descRec', '$user')";
+                
 
                 if (mysqli_query($conexion, $query)) {
+                    $queryBitacora = "INSERT INTO bitacora_recetas (receta_id, usuario_id, accion) 
+                        VALUES ('$ID', '$user', 'Creado')";
+                    mysqli_query($conexion, $queryBitacora);
                     $_SESSION['alert'] = 'success';
                     $_SESSION['msj2'] = "Receta almacenada exitosamente";
                 } else {

@@ -87,15 +87,15 @@ $pastel = mysqli_fetch_array($resultado);
 			<div class = contenedor>
 				<section class="gallery">
 					<img
-						src="../Static/img/Index1.gif"
+						src="../Static/img/Pgallery1.png"
 						alt="Gallery Img1"
 						class="gallery-img-1"
 					/><img
-						src="../Static/img/Index2.gif"
+						src="../Static/img/Pgallery2.png"
 						alt="Gallery Img2"
 						class="gallery-img-2"
 					/><img
-						src="../Static/img/Index3.gif"
+						src="../Static/img/Pgallery3.png"
 						alt="Gallery Img3"
 						class="gallery-img-3"
 					/>

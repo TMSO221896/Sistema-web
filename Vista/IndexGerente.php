@@ -214,8 +214,12 @@ if ($rol != 2) {  // Cambia 2 por el número de rol que representa administrador
 
                         <!-- Pestaña Pedidos -->
                         <div class="tab-pane fade" id="read-pedidos">
+                            <div class="mb-3">
+                                <label for="filter-status" class="form-label">Buscar por Estatus:</label>
+                                <input type="text" id="filter-status" class="form-control" placeholder="Escribe un estatus para filtrar...">
+                            </div>
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-striped table-bordered table-hover" id="pedidos-table">
                                     <thead class="table-dark">
                                         <tr>
                                             <th>ID pedido</th>
@@ -226,40 +230,34 @@ if ($rol != 2) {  // Cambia 2 por el número de rol que representa administrador
                                             <th>Artículos</th>
                                         </tr>
                                     </thead>
-                                    <tbody> <!-- Etiqueta tbody corregida -->
+                                    <tbody>
                                         <?php
-                                            $sql = "SELECT * FROM pedidos;";
-                                            $execute = mysqli_query($conexion, $sql);
-                                            $index = 0;
+                                        $sql = "SELECT * FROM pedidos;";
+                                        $execute = mysqli_query($conexion, $sql);
+                                        $index = 0;
 
-                                            while ($rows = mysqli_fetch_array($execute)) {
-                                                $id_pedido = $rows['id'];
-                                                $cliente = $rows['user_id'];
-                                                $fec_Reg = $rows['fecha_actual'];
-                                                $Total = $rows['Total'];
-                                                $Estatus = $rows['estatus'];
-                                                // Verifica si estas variables están definidas en el contexto adecuado
-                                                $id_pastel = isset($rows['id_pastel']) ? $rows['id_pastel'] : null; 
-                                                $nombreP = isset($rows['nombreP']) ? $rows['nombreP'] : null;
-                                                $descripcion = isset($rows['descripcion']) ? $rows['descripcion'] : null;
-                                                $precio = isset($rows['precio']) ? $rows['precio'] : null;
+                                        while ($rows = mysqli_fetch_array($execute)) {
+                                            $id_pedido = $rows['id'];
+                                            $cliente = $rows['user_id'];
+                                            $fec_Reg = $rows['fecha_actual'];
+                                            $Total = $rows['Total'];
+                                            $Estatus = $rows['estatus'];
                                         ?>
                                         <tr>
-                                            <td> <?php echo $id_pedido; ?> </td>
-                                            <td> <?php echo $cliente; ?> </td>
-                                            <td> <?php echo $fec_Reg; ?> </td>
-                                            <td> $<?php echo $Total; ?> </td>
-                                            <td><?php echo $Estatus; ?></td>
+                                            <td><?php echo $id_pedido; ?></td>
+                                            <td><?php echo $cliente; ?></td>
+                                            <td><?php echo $fec_Reg; ?></td>
+                                            <td>$<?php echo $Total; ?></td>
+                                            <td class="estatus"><?php echo $Estatus; ?></td>
                                             <td>
-                                                <!-- Solo opción para actualizar los primeros 3 pasteles -->
-                                                <button type="button" class="btn btn-primary btn-sm" onclick="VisualizarProductos(event, <?php echo $id_pedido; ?>)" >
-                                                    Articulos
+                                                <button type="button" class="btn btn-primary btn-sm" onclick="VisualizarProductos(event, <?php echo $id_pedido; ?>)">
+                                                    Artículos
                                                 </button>
                                             </td>
                                         </tr>
                                         <?php
                                             $index++;
-                                            }
+                                        }
                                         ?>
                                     </tbody>
                                 </table>
@@ -268,56 +266,69 @@ if ($rol != 2) {  // Cambia 2 por el número de rol que representa administrador
 
                         <div class="tab-pane fade" id="UPD-drop">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-striped table-bordered table-hover" id="productos-table">
+                                    <div class="alert alert-info" role="alert">
+                                        <strong>Aviso:</strong> Aquí puedes actualizar la visualización de los productos, eliminarlos o modificar sus detalles.
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="filter-categoria" class="form-label">Buscar por Categoria:</label>
+                                        <input type="text" id="filter-categoria" class="form-control" placeholder="Escribe una categoría para filtrar...">
+                                    </div>
                                     <thead class="table-dark">
                                         <tr>
                                             <th>ID producto</th>
                                             <th>Nombre Producto</th>
                                             <th>Descripción</th>
                                             <th>Precio</th>
+                                            <th>Categoría</th>
                                             <th>Actualización</th>
                                         </tr>
                                     </thead>
-                                    <body>
+                                    <tbody>
                                         <?php
-                                            $sql = "SELECT * FROM pasteles;";
-                                            $execute = mysqli_query($conexion, $sql);
-                                            $index = 0;
+                                        $sql = "SELECT * FROM pasteles;";
+                                        $execute = mysqli_query($conexion, $sql);
+                                        $index = 0;
 
-                                            while ($rows = mysqli_fetch_array($execute)) {
-                                                $id_pastel = $rows['id_pastel'];
-                                                $nombreP = $rows['nombreP'];
-                                                $descripcion = $rows['descripcion'];
-                                                $precio = $rows['precio'];
+                                        while ($rows = mysqli_fetch_array($execute)) {
+                                            $id_pastel = $rows['id_pastel'];
+                                            $nombreP = $rows['nombreP'];
+                                            $descripcion = $rows['descripcion'];
+                                            $precio = $rows['precio'];
+                                            $categoria = $rows['categoria'];
                                         ?>
                                         <tr>
                                             <td> <?php echo $id_pastel; ?> </td>
                                             <td> <?php echo $nombreP; ?> </td>
                                             <td> <?php echo $descripcion; ?> </td>
                                             <td> $<?php echo $precio; ?> </td>
+                                            <td class='categoria'> <?php echo $categoria; ?> </td>
                                             <td>
-                                                    <!-- Opción solo para actualizar los primeros 3 pasteles -->
-                                                        <input type="hidden" name="id_pastel" value="<?php echo $id_pastel; ?>">
-                                                        <button type="button" class="btn btn-primary btn-sm" onclick="ActualizarProductos(event, <?php echo $id_pastel; ?>)" 
-                                                                data-nombre="<?php echo $nombreP; ?>"
-                                                                data-descripcion="<?php echo $descripcion; ?>"
-                                                                data-precio="<?php echo $precio; ?>">
-                                                            Actualizar
-                                                        </button>
-                                                </td>
+                                                <input type="hidden" name="id_pastel" value="<?php echo $id_pastel; ?>">
+                                                <button type="button" class="btn btn-primary btn-sm" onclick="ActualizarProductos(event, <?php echo $id_pastel; ?>)" 
+                                                        data-nombre="<?php echo $nombreP; ?>"
+                                                        data-descripcion="<?php echo $descripcion; ?>"
+                                                        data-precio="<?php echo $precio; ?>">
+                                                    Actualizar
+                                                </button>
+                                            </td>
                                         </tr>
                                         <?php
                                             $index++;
-                                            }
+                                        }
                                         ?>
-                                    </body>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
 
                         <div class="tab-pane fade" id="UPD-dropRec">
+                            <div class="mb-3">
+                                <label for="filter-description" class="form-label">Buscar por Descripción:</label>
+                                <input type="text" id="filter-description" class="form-control" placeholder="Escribe parte de la descripción para filtrar...">
+                            </div>
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-striped table-bordered table-hover" id="recetas-table">
                                     <thead class="table-dark">
                                         <tr>
                                             <th>ID Receta</th>
@@ -340,7 +351,7 @@ if ($rol != 2) {  // Cambia 2 por el número de rol que representa administrador
                                         <tr>
                                             <td> <?php echo $id_Receta; ?> </td>
                                             <td> <?php echo $nombreR; ?> </td>
-                                            <td> <?php echo $descripcion; ?> </td>
+                                            <td class='descripcion'> <?php echo $descripcion; ?> </td>
                                             <td>
                                                 <input type="hidden" name="id_receta" value="<?php echo $id_Receta; ?>">
                                                 <button type="button" class="btn btn-primary btn-sm" onclick="ActualizarRecetas(event, <?php echo $id_Receta; ?>)" 
@@ -503,6 +514,55 @@ if ($rol != 2) {  // Cambia 2 por el número de rol que representa administrador
         }
     </script>
 
+    <!-- Filtros -->
+    <script>
+        document.getElementById('filter-status').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#pedidos-table tbody tr');
+            rows.forEach(row => {
+                const status = row.querySelector('.estatus').textContent.toLowerCase();
+                if (status.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        function filtrarPorCategoria() {
+            const categoria = document.getElementById('categoriaBusqueda').value;
+            const url = categoria ? `?categoria=${encodeURIComponent(categoria)}` : window.location.pathname;
+            window.location.href = url;
+        }
+
+        document.getElementById('filter-description').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#recetas-table tbody tr');
+
+            rows.forEach(row => {
+                const description = row.querySelector('.descripcion').textContent.toLowerCase();
+                if (description.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('filter-categoria').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#productos-table tbody tr');
+
+            rows.forEach(row => {
+                const categoria = row.querySelector('.categoria').textContent.toLowerCase();
+                if (categoria.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -5,13 +5,15 @@ session_start(); // Inicia la sesión al principio
 // Verificar si se ha enviado el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Comprobar si es el formulario de registro
-    if (isset($_POST['idproducto'], $_POST['nombreproducto'], $_POST['descripcion'], $_POST['precio'], $_FILES['imagen'])) {
+    if (isset($_POST['idproducto'], $_POST['nombreproducto'], $_POST['descripcion'], $_POST['precio'], $_POST['categoria'],$_FILES['imagen'])) {
 
         // Escapar los datos del formulario para prevenir inyecciones SQL
         $ID = mysqli_real_escape_string($conexion, $_POST['idproducto']);
         $nombreProd = mysqli_real_escape_string($conexion, $_POST['nombreproducto']);
         $descProd = mysqli_real_escape_string($conexion, $_POST['descripcion']);
         $precioProd = mysqli_real_escape_string($conexion, $_POST['precio']);
+        $categoriaProd = mysqli_real_escape_string($conexion, $_POST['categoria']);
+
 
         // Verificar si el producto ya existe
         $checkProducto = mysqli_query($conexion, "SELECT * FROM pasteles WHERE id_pastel='$ID'");
@@ -88,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Intentar mover la imagen subida a la carpeta de destino
             if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
-                $query = "INSERT INTO pasteles (id_pastel, nombreP, descripcion, precio,visualizacion) 
-                          VALUES ('$ID', '$nombreProd', '$descProd', '$precioProd','visualizar')";
+                $query = "INSERT INTO pasteles (id_pastel, nombreP, descripcion, precio,categoria,visualizacion) 
+                          VALUES ('$ID', '$nombreProd', '$descProd', '$precioProd' , '$categoriaProd','visualizar')";
 
                 if (mysqli_query($conexion, $query)) {
                     $_SESSION['alert'] = 'success';

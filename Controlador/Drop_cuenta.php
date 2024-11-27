@@ -16,6 +16,9 @@ if (mysqli_num_rows($resultado_pedidos) > 0) {
     exit();
 }
 
+$query = "INSERT INTO bitacora_usuarios (usuario_id, accion, fecha) VALUES ('$user', 'Eliminado', CURDATE())";
+$resultado = mysqli_query($conexion, $query);
+
 $sql_delete_dir = "DELETE FROM direcciones WHERE id_usuario = '$user';";
 $resultado2 = mysqli_query($conexion, $sql_delete_dir);
 // Si no hay pedidos, procede con la eliminación del usuario
@@ -23,10 +26,9 @@ $sql_delete_user = "DELETE FROM usuarios WHERE usuario = '$user';";
 $resultado = mysqli_query($conexion, $sql_delete_user);
 
 
+
 if ($resultado && mysqli_affected_rows($conexion) > 0) {
     // Cerrar sesión si el usuario fue eliminado correctamente
-    $query = "INSERT INTO bitacora_usuarios (usuario_id, accion, fecha) VALUES ('$usuario', 'Eliminado', CURDATE())";
-    $resultado = mysqli_query($conexion, $query);
     session_destroy();
     header("Location: ../Vista/Index.php");
     exit();

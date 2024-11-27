@@ -34,6 +34,9 @@ $ruta = "../Static/img/Recetas/" . $rows['nombre'] . ".png";
 if (unlink($ruta)) {
     $sql1 = "DELETE FROM recetas WHERE id = '$id_receta';";
     if (mysqli_query($conexion, $sql1)) {
+        $queryBitacora = "INSERT INTO bitacora_recetas (receta_id, usuario_id, accion) 
+                        VALUES ('$id_receta', '$user', 'Eliminado')";
+                    mysqli_query($conexion, $queryBitacora);
         // Si la eliminación fue exitosa, redirigir según el rol del usuario
         if ($rol == 1) {
             header("Location: ../Vista/IndexAdmin.php");

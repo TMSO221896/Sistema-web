@@ -82,6 +82,11 @@ if (!isset($_SESSION['usuario'])) {
         <main class="container my-5">
             <h1 class="text-center mb-5">Mis Pedidos</h1>
 
+            <!-- Campo de búsqueda para filtrar por estatus -->
+            <div class="mb-4 text-center">
+                <input type="text" id="filter-status" class="form-control w-50 mx-auto" placeholder="Filtrar por estatus...">
+            </div>
+
             <?php
             // Consultar los pedidos del usuario actual
             $query_pedidos = $conexion->prepare("SELECT * FROM pedidos WHERE user_id = ?");
@@ -96,7 +101,7 @@ if (!isset($_SESSION['usuario'])) {
                 echo '<img src="../Static/img/vacio.png" alt="Sin pedidos" style="max-width: 300px; height: auto; margin-bottom: 20px;">';
                 echo '</div>';
             } else {
-                echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+                echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="pedidos-container">';
                 // Mostrar cada pedido
                 while ($pedido = $result_pedidos->fetch_assoc()) {
                     $id_pedido = $pedido['id'];
@@ -105,7 +110,7 @@ if (!isset($_SESSION['usuario'])) {
                     $estatus = $pedido['estatus'];
                     $fecha_actual = $pedido['fecha_actual'];
             ?>
-                    <div class="col">
+                    <div class="col pedido" data-estatus="<?php echo strtolower($estatus); ?>">
                         <div class="card rounded-3 shadow-sm" style="border-top: 4px solid #f16cb6; background-color: #fff;">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -217,3 +222,18 @@ if (!isset($_SESSION['usuario'])) {
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 		
     </body>
+    <script>
+   document.getElementById('filter-status').addEventListener('input', function () {
+    const filter = this.value.toLowerCase(); // Convertir texto a minúsculas
+    const pedidos = document.querySelectorAll('.pedido'); // Obtener todas las tarjetas de pedido
+
+    pedidos.forEach(pedido => {
+        const estatus = pedido.getAttribute('data-estatus'); // Leer el estatus del atributo 'data-estatus'
+        if (estatus.includes(filter)) {
+            pedido.style.display = ''; // Mostrar tarjeta si coincide
+        } else {
+            pedido.style.display = 'none'; // Ocultar tarjeta si no coincide
+        }
+    });
+});
+</script>

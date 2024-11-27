@@ -108,7 +108,7 @@
                                     ?>
                                 </td>
                                 <td>
-                                  <?php if (isset($_SESSION['usuario']) && $_SESSION['usuario'] === $row['idUsuario'] || $rol === 1): ?>
+                                  <?php if (isset($_SESSION['usuario']) && $_SESSION['usuario'] === $row['idUsuario'] || $rol == 1): ?>
                                         <form method="POST" action="../Controlador/Drop_comentario.php" style="display: inline;" id="form-eliminarCom-<?php echo $index; ?>">
                                             <input type="hidden" name="id_comentario" value="<?php echo $id_com; ?>">
                                             <button type="button" onclick="confirmarEliminacionCom(<?php echo $index; ?>)" style="background: none; border: none; padding: 0;">

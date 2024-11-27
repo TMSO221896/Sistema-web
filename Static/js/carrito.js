@@ -204,3 +204,50 @@ contentAdditionalInformation.classList.toggle('hidden');
 toggleReviews.addEventListener('click', () => {
 contentReviews.classList.toggle('hidden');
 });
+
+
+function actualizarTotal(index, precioUnitario) {
+    // Obtener el valor actual de la cantidad
+    const cantidadInput = document.getElementById(`cantidad-${index}`);
+    const cantidad = parseInt(cantidadInput.value, 10);
+
+    if (isNaN(cantidad) || cantidad < 1) {
+        alert('Por favor, ingrese una cantidad válida.');
+        cantidadInput.value = 1;
+        return;
+    }
+
+    // Calcular el subtotal
+    const subtotal = cantidad * precioUnitario;
+
+    // Actualizar el subtotal mostrado
+    const subtotalElement = document.getElementById(`subtotal-${index}`);
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+
+    // Recalcular el total general
+    recalcularTotal();
+}
+
+function recalcularTotal() {
+    // Buscar todos los elementos de cantidad y calcular subtotales
+    const cantidadInputs = document.querySelectorAll('input[name="quantity"]');
+    let total = 0;
+
+    cantidadInputs.forEach(input => {
+        const index = input.id.split('-')[1];
+        const precioUnitario = parseFloat(input.getAttribute('data-precio-unitario')); // Obtener precio desde el atributo
+        const cantidad = parseInt(input.value, 10);
+
+        if (!isNaN(precioUnitario) && !isNaN(cantidad)) {
+            total += cantidad * precioUnitario;
+        }
+    });
+
+    // Actualizar el total general mostrado
+    const totalElement = document.getElementById('total-general');
+    totalElement.textContent = `$${total.toFixed(2)}`;
+
+    // Actualizar el resumen de productos
+    const resumenProductos = document.querySelector('.list-group-item span');
+    resumenProductos.textContent = `$${total.toFixed(2)}`;
+}

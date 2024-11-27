@@ -35,6 +35,7 @@ create table if not exists pasteles(
     nombreP VARCHAR(20) NOT NULL comment'Guarda el nombre del pastel',
     descripcion TEXT NOT NULL comment'Guarda una descripcion de lo que contiene el pastel',
     precio double  NOT NULL comment'Guarda el precio del pastel',
+    categoria varchar(20) NOT NULL Comment 'Guarda la categoria del producto',
     visualizacion varchar(15) NOT NULL comment'Se alamacena visualizar o ocultar dependiendo si se desea visualizar el pastel',
     primary key(id_pastel)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -102,6 +103,15 @@ create table if not exists resenias(
 DROP TABLE IF EXISTS bitacora_usuarios;
 CREATE TABLE bitacora_usuarios (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    usuario_id VARCHAR(30) NOT NULL comment 'Almacena el id del usuario',
+    accion VARCHAR(50) NOT NULL comment 'Almacena la accion realizada por el usuario',
+    fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS bitacora_recetas;
+CREATE TABLE bitacora_recetas (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    receta_id VARCHAR(30) NOT NULL comment 'Almacena el id de la receta',
     usuario_id VARCHAR(30) NOT NULL comment 'Almacena el id del usuario',
     accion VARCHAR(50) NOT NULL comment 'Almacena la accion realizada por el usuario',
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

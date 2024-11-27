@@ -84,7 +84,7 @@ $pastel = mysqli_fetch_array($resultado);
         
         <main>
 			<div class = contenedor>
-			<section class="gallery">
+				<section class="gallery">
 					<img
 						src="../Static/img/Pgallery1.png"
 						alt="Gallery Img1"
